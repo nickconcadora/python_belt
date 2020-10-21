@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}}'s Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class ="d-flex justify-content-between bg-warning">
+        <a href="/quotes" class="btn btn-danger">Home</a>
+        <a href= "/logout" class ="btn btn-danger">Log Out</a>
+        
+
+    </div>
+    <h1 class="text-center">{{user.first_name}} {{user.last_name}} Quotes</h1>
+    {% for q in user.quotes.all %}
+        <div class="card p-3 bg-light">Quotes</a>
+            <h4 class="card-text">{{q.author}}</h4>
+            <p class="card-text">{{q.quote}}</p>
+
+        </div>
+
+    {% endfor %}
+    
+</body>
+</html>

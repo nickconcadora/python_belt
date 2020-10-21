@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class ="d-flex justify-content-between bg-warning">
+        <h1 class="text-center">Wecome {{user.first_name}} {{user.last_name}}!</h1>
+        <a href="/edit_user" class="btn btn-danger">Edit Account</a>
+        <a href= "/show_user/{{user.id}}" class ="btn btn-danger">My Quotes</a>
+        <a href= "/logout" class ="btn btn-danger">Log Out</a>
+
+    </div>
+    
+    <div class ="d-flex justify-content-around p-5">
+        <div class="col-6 d-flex flex-column justify-content-around align-items-center">
+            <h3>Quotes</h3>
+            {% for q in all_quotes %}
+            <div class="card col-5">
+                <div class="card-body">
+                    <p class="card-text">{{q.author}}: "{{q.quote}}"</p>
+                    Posted By: <a href="/show_user/{{q.user.id}}">{{q.user.first_name}} {{q.user.last_name}}</a><br>
+                    {% if q.likes.count > 0 %}
+                    <p class="card-text"> Likes: {{q.likes.count}}</p>
+                    {% endif %}
+                    <a href="/like/{{q.id}}/{{user.id}}" class="btn btn-danger">Like</a>
+                    {% if q.user.id == user.id %}
+                    <a href="/delete_quote/{{q.id}}" class="btn btn-danger btn-outline-warning">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <!-- <p class="card-text"> Posted By: {{q.user.first_name}} {{q.user.last_name}}</p> -->
+
+        </div>
+        <form action="/create_quote" method="post" class="col-4" class="col-4 bg-light p-3">
+            <h2 class="text-center">Add a Quote</h2>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for = "author">Author</label>
+                <input type = "text" name="author" class = "form-control">
+                <span class = "text-danger">
+                    {% for message in messages %}
+                        {% if message.tags == 'author error' %}
+                            {{message}}
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            <div class="form-group">
+                <label for = "quote">Quote</label>
+                <input type = "textarea" name="quote" class = "form-control">
+                <span class = "text-danger">
+                    {% for message in messages %}
+                        {% if message.tags == 'quote error' %}
+                            {{message}}
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+            <input type="submit" value="Add Quote" class="btn btn-warning btn-outline-dark">
+
+        
+        </form>       
+    </div>
+    <script src ="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" async></script>
+
+    
+</body>
+</html>

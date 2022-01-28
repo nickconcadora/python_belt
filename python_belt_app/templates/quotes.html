@@ -19,7 +19,7 @@
         <div class="col-4 d-flex flex-column justify-content-around align-items-center">
             <h3>Quotes</h3>
             {% for q in all_quotes %}
-            <div class="card col">
+            <div class="card col -3">
                 <div class="card-body">
                     <p class="card-text">{{q.author}}: "{{q.quote}}"</p>
                     Posted By: <a href="/show_user/{{q.user.id}}">{{q.user.first_name}} {{q.user.last_name}}</a><br>
